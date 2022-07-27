@@ -6,6 +6,8 @@ import axios from 'axios'
 
 const HomeScreen = () => {
 
+  const friends = ["Rob", "Sally", "Joe"]
+
   const [products, setProducts ] = useState([])
 
   useEffect(() => {
