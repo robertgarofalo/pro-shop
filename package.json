@@ -1,0 +1,29 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "Mern shopping cart app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertgarofalo/pro-shop.git"
+  },
+  "author": "Robert Garofalo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robertgarofalo/pro-shop/issues"
+  },
+  "homepage": "https://github.com/robertgarofalo/pro-shop#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19"
+  }
+}
