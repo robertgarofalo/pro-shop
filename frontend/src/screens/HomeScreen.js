@@ -1,25 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
-import axios from 'axios'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { getProducts, reset } from '../features/products/productSlice'
+import Spinner from '../components/Spinner'
 
 const HomeScreen = () => {
 
-  const friends = ["Rob", "Sally", "Joe"]
+  const dispatch = useDispatch()
 
-  const [products, setProducts ] = useState([])
+  const { products, isLoading, isError, message } = useSelector(
+    (state) => state.products
+  )
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products')
 
-      setProducts(data)
+    if (isError) {
+      console.log(message)
     }
 
-    fetchProducts()
+    dispatch(getProducts())
 
-  },[])
+    return () => {
+      dispatch(reset())
+    }
+
+  },[isError, message, dispatch])
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <>

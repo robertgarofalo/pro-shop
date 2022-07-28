@@ -2,21 +2,35 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import Rating from '../components/Rating'
-
-import axios from 'axios'
+import Spinner from '../components/Spinner'
+import { useSelector, useDispatch } from 'react-redux'
+import { getSingleProduct, reset } from '../features/products/productSlice'
 
 const ProductScreen = ({ match }) => {
 
-    const [ product, setProduct ] = useState({})
+    const dispatch = useDispatch()
+    const { product, isError, isLoading, message } = useSelector(
+        (state) => state.products
+    )
 
     useEffect(() => {
-        const fetchProduct = async () => {
-        const { data } = await axios.get(`/api/products/${match.params.id}`)
-        setProduct(data)
-        }
 
-        fetchProduct()
-    },[])
+        if (isError) {
+          console.log(message)
+        }
+    
+        dispatch(getSingleProduct(match.params.id))
+    
+        return () => {
+          dispatch(reset())
+        }
+    
+      },[isError, message, dispatch])
+
+      if (isLoading) {
+        return <Spinner />
+      }
+    
 
   return (
     <>
